@@ -11,5 +11,11 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    NavigationStack {
+        ZStack {
+            Colors.background.ignoresSafeArea()
+            
+            ContentView()
+        }
+    }
 }
