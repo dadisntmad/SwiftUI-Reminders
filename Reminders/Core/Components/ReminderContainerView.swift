@@ -52,7 +52,7 @@ struct ReminderContainerView: View {
                 .foregroundStyle(Colors.gray70)
         }
         .padding(.horizontal, 12)
-        .frame(width: 164, height: 82)
+        .frame(height: 82)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }

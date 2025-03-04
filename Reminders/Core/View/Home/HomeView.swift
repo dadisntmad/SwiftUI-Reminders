@@ -3,7 +3,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 HStack(spacing: 15) {
                     NavigationLink {
                         Text("Today")
@@ -60,7 +60,55 @@ struct HomeView: View {
                         )
                     }
                 }
+                
+                Text("My Lists")
+                    .font(.system(size: 22, weight: .bold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 15)
+                    .padding(.bottom, 10)
+                
+                LazyVStack {
+                    ForEach(0 ..< 25) { index in
+                        Text("\(index)")
+                    }
+                }
+                
+                Spacer()
+                
+                
             }
+            .padding(.horizontal)
+            
+            HStack {
+                Button {
+                    
+                } label: {
+                    HStack(spacing: 10) {
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 24, height: 24)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundStyle(Color.white)
+                                    .fontWeight(.semibold)
+                            }
+                        
+                        Text("New Reminder")
+                            .font(.system(size: 18, weight: .semibold))
+                    }
+                }
+                
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text("Add List")
+                        .font(.system(size: 18))
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
     }
 }
