@@ -2,20 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            Colors.background.ignoresSafeArea()
-            
-            HomeView()
-        }
+        HomeView()
     }
 }
 
 #Preview {
-    NavigationStack {
-        ZStack {
-            Colors.background.ignoresSafeArea()
-            
-            ContentView()
-        }
-    }
+    ContentView()
 }
