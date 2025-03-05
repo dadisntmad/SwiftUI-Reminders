@@ -1,4 +1,5 @@
 import SwiftUI
+import SwipeActions
 
 struct HomeView: View {
     var body: some View {
@@ -75,6 +76,16 @@ struct HomeView: View {
                         } label: {
                             ListContainerView(circleColor: .orange, title: "Reminder", imagePath: "list.bullet", count: 3)
                                 .foregroundStyle(Color.black)
+                                .addSwipeAction(edge: .trailing) {
+                                    Button {
+                                        
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .frame(width: 70, height: 54, alignment: .center)
+                                            .foregroundColor(.white)
+                                            .background(Color.red)
+                                    }
+                                }
                         }
                         
                         Divider()
