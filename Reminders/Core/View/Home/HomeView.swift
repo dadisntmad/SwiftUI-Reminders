@@ -67,15 +67,21 @@ struct HomeView: View {
                     .padding(.top, 15)
                     .padding(.bottom, 10)
                 
-                LazyVStack {
-                    ForEach(0 ..< 25) { index in
-                        Text("\(index)")
+                LazyVStack(spacing: 0) {
+                    ForEach(0 ..< 3) { _ in
+                        
+                        NavigationLink {
+                            
+                        } label: {
+                            ListContainerView(circleColor: .orange, title: "Reminder", imagePath: "list.bullet", count: 3)
+                                .foregroundStyle(Color.black)
+                        }
+                        
+                        Divider()
+                            .padding(.leading, 60)
                     }
                 }
-                
-                Spacer()
-                
-                
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             .padding(.horizontal)
             
