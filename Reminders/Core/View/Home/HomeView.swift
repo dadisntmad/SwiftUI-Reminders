@@ -2,9 +2,6 @@ import SwiftUI
 import SwipeActions
 
 struct HomeView: View {
-    @State private var isNewReminderSheetPresented = false
-    @State private var isAddListSheetPresented = false
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -68,11 +65,7 @@ struct HomeView: View {
                             }
                         }
                         
-                        Text("My Lists")
-                            .font(.system(size: 22, weight: .bold))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 15)
-                            .padding(.bottom, 10)
+                        MyListsTextView()
                         
                         LazyVStack(spacing: 0) {
                             ForEach(0 ..< 25) { _ in
@@ -98,49 +91,12 @@ struct HomeView: View {
                             }
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        
                     }
                     .padding(.horizontal)
                     
                     Spacer()
                     
-                    HStack {
-                        Button {
-                            isNewReminderSheetPresented = true
-                        } label: {
-                            HStack(spacing: 10) {
-                                Circle()
-                                    .fill(Color.blue)
-                                    .frame(width: 24, height: 24)
-                                    .overlay {
-                                        Image(systemName: "plus")
-                                            .foregroundStyle(Color.white)
-                                            .fontWeight(.semibold)
-                                    }
-                                
-                                Text("New Reminder")
-                                    .font(.system(size: 18, weight: .semibold))
-                            }
-                        }
-                        .sheet(isPresented: $isNewReminderSheetPresented) {
-                            Text("New reminder sheet")
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            isAddListSheetPresented = true
-                        } label: {
-                            Text("Add List")
-                                .font(.system(size: 18))
-                        }
-                        .sheet(isPresented: $isAddListSheetPresented) {
-                            Text("Add list sheet")
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                    .background(Colors.background)
+                    ActionButtons()
                 }
             }
         }
