@@ -24,7 +24,7 @@ struct ActionButtons: View {
                 }
             }
             .sheet(isPresented: $isNewReminderSheetPresented) {
-                Text("New reminder sheet")
+                NewReminderView()
             }
             
             Spacer()
