@@ -3,9 +3,19 @@ import SwiftUI
 struct NewReminderView: View {
     @State private var title = ""
     @State private var notes = ""
+    @State private var isDialogPresented = false
+    
+    @Environment(\.dismiss) private var dismiss
     
     private var isEmpty: Bool {
         return title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    private var shouldShowDialog: Bool {
+        let titleIsNotEmpty = !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let notesIsNotEmpty = !notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        
+        return titleIsNotEmpty || notesIsNotEmpty
     }
     
     var body: some View {
@@ -16,9 +26,24 @@ struct NewReminderView: View {
                 // action buttons
                 HStack {
                     Button {
+                        if shouldShowDialog {
+                            isDialogPresented = true
+                        } else {
+                            dismiss()
+                        }
                         
                     } label: {
                         Text("Cancel")
+                    }
+                    .confirmationDialog(
+                        Text("Discard Changes?"),
+                        isPresented: $isDialogPresented
+                    ) {
+                        Button("Discard Changes", role: .destructive) {
+                            dismiss()
+                            title = ""
+                            notes = ""
+                        }
                     }
                     
                     Spacer()
