@@ -4,6 +4,7 @@ struct NewReminderView: View {
     @State private var title = ""
     @State private var notes = ""
     @State private var isDialogPresented = false
+    @State private var selectedList = 0
     
     @Environment(\.dismiss) private var dismiss
     
@@ -19,105 +20,113 @@ struct NewReminderView: View {
     }
     
     var body: some View {
-        ZStack {
-            Colors.background.ignoresSafeArea()
-            
-            VStack {
-                // action buttons
-                HStack {
-                    Button {
-                        if shouldShowDialog {
-                            isDialogPresented = true
-                        } else {
-                            dismiss()
-                        }
-                        
-                    } label: {
-                        Text("Cancel")
-                    }
-                    .confirmationDialog(
-                        Text("Discard Changes?"),
-                        isPresented: $isDialogPresented
-                    ) {
-                        Button("Discard Changes", role: .destructive) {
-                            dismiss()
-                            title = ""
-                            notes = ""
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    Text("New Reminder")
-                        .font(.system(size: 17, weight: .semibold))
-                    
-                    Spacer()
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("Add")
-                    }
-                    .disabled(isEmpty)
-                }
-                .padding()
+        NavigationStack {
+            ZStack {
+                Colors.background.ignoresSafeArea()
                 
-                ScrollView(showsIndicators: false) {
-                    // form
-                    VStack(spacing: 16) {
-                        
-                        TextField("Title", text: $title, axis: .vertical)
-                            .padding(.horizontal)
-                            .padding(.top)
-                        
-                        Divider()
-                            .padding(.leading)
-                        
-                        ZStack(alignment: .topLeading) {
-                            TextEditor(text: $notes)
-                                .frame(minHeight: 100)
-                                .padding(.horizontal)
+                VStack {
+                    // action buttons
+                    HStack {
+                        Button {
+                            if shouldShowDialog {
+                                isDialogPresented = true
+                            } else {
+                                dismiss()
+                            }
                             
-                            if notes.isEmpty {
-                                Text("Notes")
-                                    .foregroundColor(.gray50)
-                                    .padding(.horizontal)
-                                    .padding(.top, 8)
+                        } label: {
+                            Text("Cancel")
+                        }
+                        .confirmationDialog(
+                            Text("Discard Changes?"),
+                            isPresented: $isDialogPresented
+                        ) {
+                            Button("Discard Changes", role: .destructive) {
+                                dismiss()
+                                title = ""
+                                notes = ""
                             }
                         }
                         
                         Spacer()
-                    }
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.bottom, 15)
-                    
-                    // list
-                    HStack(spacing: 6) {
-                        Text("List")
-                            .font(.system(size: 17))
+                        
+                        Text("New Reminder")
+                            .font(.system(size: 17, weight: .semibold))
                         
                         Spacer()
                         
-                        HStack {
-                            Circle()
-                                .fill(.orange)
-                                .frame(width: 8, height: 8)
+                        Button {
                             
-                            Text("Reminder")
-                                .font(.system(size: 17))
-                                .foregroundStyle(Color.gray70)
-                            
-                            Image("caret")
+                        } label: {
+                            Text("Add")
                         }
+                        .disabled(isEmpty)
                     }
                     .padding()
-                    .frame(height: 54)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    
+                    ScrollView(showsIndicators: false) {
+                        // form
+                        VStack(spacing: 16) {
+                            
+                            TextField("Title", text: $title, axis: .vertical)
+                                .padding(.horizontal)
+                                .padding(.top)
+                            
+                            Divider()
+                                .padding(.leading)
+                            
+                            ZStack(alignment: .topLeading) {
+                                TextEditor(text: $notes)
+                                    .frame(minHeight: 100)
+                                    .padding(.horizontal)
+                                
+                                if notes.isEmpty {
+                                    Text("Notes")
+                                        .foregroundColor(.gray50)
+                                        .padding(.horizontal)
+                                        .padding(.top, 8)
+                                }
+                            }
+                            
+                            Spacer()
+                        }
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .padding(.bottom, 15)
+                        
+                        // list
+                        NavigationLink {
+                            ListsView(selectedList: $selectedList)
+                                .navigationTitle("List")
+                        } label: {
+                            HStack(spacing: 6) {
+                                Text("List")
+                                    .foregroundStyle(Color.black)
+                                    .font(.system(size: 17))
+                                
+                                Spacer()
+                                
+                                HStack {
+                                    Circle()
+                                        .fill(.orange)
+                                        .frame(width: 8, height: 8)
+                                    
+                                    Text("Reminder")
+                                        .font(.system(size: 17))
+                                        .foregroundStyle(Color.gray70)
+                                    
+                                    Image("caret")
+                                }
+                            }
+                            .padding()
+                            .frame(height: 54)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                    }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
     }
 }
