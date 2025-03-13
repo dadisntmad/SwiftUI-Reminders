@@ -6,7 +6,10 @@ struct KeyboardToolbarView: View {
     var body: some View {
         HStack(spacing: 10) {
             ForEach(0 ..< 4) { index in
-                KeyboardDateSelectionView(calendarText: "11", title: "Today", isSelected: selectedDateBox == index)
+                KeyboardDateSelectionView(
+                    isSelected: selectedDateBox == index,
+                    index: index
+                )
                     .onTapGesture {
                         selectedDateBox = index
                     }
