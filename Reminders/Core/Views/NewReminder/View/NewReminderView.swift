@@ -5,6 +5,7 @@ struct NewReminderView: View {
     @State private var notes = ""
     @State private var isDialogPresented = false
     @State private var selectedList = 0
+    @State private var selectedDateBox = 0
     
     @Environment(\.dismiss) private var dismiss
     
@@ -67,10 +68,10 @@ struct NewReminderView: View {
                     ScrollView(showsIndicators: false) {
                         // form
                         VStack(spacing: 16) {
-                            
-                            TextField("Title", text: $title, axis: .vertical)
+                            CustomTextView(text: $title, selectedDateBox: $selectedDateBox)
                                 .padding(.horizontal)
                                 .padding(.top)
+                                .frame(minHeight: 44)
                             
                             Divider()
                                 .padding(.leading)
