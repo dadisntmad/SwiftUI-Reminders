@@ -95,6 +95,10 @@ struct NewReminderView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding(.bottom, 15)
                         
+                        // details
+                        DetailsSectionView(index: selectedDateBox)
+                            .padding(.bottom, 15)
+                        
                         // list
                         NavigationLink {
                             ListsView(selectedList: $selectedList)
@@ -119,7 +123,7 @@ struct NewReminderView: View {
                                     Image("caret")
                                 }
                             }
-                            .padding()
+                            .padding(.horizontal)
                             .frame(height: 54)
                             .background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
