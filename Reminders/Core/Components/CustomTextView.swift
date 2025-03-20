@@ -3,6 +3,7 @@ import SwiftUI
 struct CustomTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var selectedDateBox: Int
+    @Binding var isDateDialogPresented: Bool
     
     var placeholder = "Title"
     
@@ -19,7 +20,7 @@ struct CustomTextView: UIViewRepresentable {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textView.frame.size.width, height: 84))
         
         // Convert SwiftUI View to UIView
-        let hostingController = UIHostingController(rootView: KeyboardToolbarView(selectedDateBox: $selectedDateBox))
+        let hostingController = UIHostingController(rootView: KeyboardToolbarView(selectedDateBox: $selectedDateBox, isDateDialogPresented: $isDateDialogPresented))
         hostingController.view.backgroundColor = .clear
         hostingController.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 84)
         
