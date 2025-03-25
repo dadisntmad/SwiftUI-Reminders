@@ -2,6 +2,7 @@ import SwiftUI
 
 class Colors {
     // gray
+    static var gray30 = Color("gray30")
     static var gray40 = Color("gray40")
     static var gray50 = Color("gray50")
     static var gray70 = Color("gray70")

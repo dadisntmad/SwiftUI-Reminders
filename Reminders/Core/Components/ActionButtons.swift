@@ -36,7 +36,7 @@ struct ActionButtons: View {
                     .font(.system(size: 18))
             }
             .sheet(isPresented: $isAddListSheetPresented) {
-                Text("Add list sheet")
+                AddListSheetView()
             }
         }
         .padding(.horizontal)
