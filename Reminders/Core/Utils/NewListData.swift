@@ -2,11 +2,11 @@ import SwiftUI
 
 class NewListData {
     static var colors = [
+        Color.blue,
         Color.red,
         Color.orange,
         Color.yellow,
         Color.green,
-        Color.blue,
         Color.purple,
         Color.brown,
         Color.pink,
