@@ -70,7 +70,9 @@ struct HomeView: View {
                         LazyVStack(spacing: 0) {
                             ForEach(0 ..< 25) { _ in
                                 NavigationLink {
-                                    
+                                    ReminderDetailsView()
+                                        .navigationTitle("Reminder")
+                                        .navigationBarTitleDisplayMode(.large)
                                 } label: {
                                     ListContainerView(circleColor: .orange, title: "Reminder", imagePath: "list.bullet", count: 3)
                                         .foregroundStyle(Color.black)
