@@ -6,6 +6,8 @@ struct AddListSheetView: View {
     @State private var selectedColor: Color
     @State private var selectedIcon: String
     
+    @State private var homeViewModel = HomeViewModel()
+    
     private var isEmpty: Bool {
         return listName.trimmingCharacters(in: .whitespaces).isEmpty
     }
@@ -20,6 +22,13 @@ struct AddListSheetView: View {
             // buttons
             AddListSheetViewActionButtons(
                 isEmpty: isEmpty,
+                addList: {
+                    homeViewModel.addList(
+                        color: selectedColor,
+                        icon: selectedIcon,
+                        title: listName
+                    )
+                },
                 isDialogPresented: $isDialogPresented,
                 listName: $listName
             )

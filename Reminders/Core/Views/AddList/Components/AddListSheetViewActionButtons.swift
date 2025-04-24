@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AddListSheetViewActionButtons: View {
     let isEmpty: Bool
+    let addList: () -> Void
     
     @Binding var isDialogPresented: Bool
     @Binding var listName: String
@@ -44,7 +45,8 @@ struct AddListSheetViewActionButtons: View {
             Spacer()
             
             Button {
-                
+                addList()
+                dismiss()
             } label: {
                 Text("Add")
             }
@@ -55,5 +57,10 @@ struct AddListSheetViewActionButtons: View {
 }
 
 #Preview {
-    AddListSheetViewActionButtons(isEmpty: false, isDialogPresented: .constant(false), listName: .constant("List Name"))
+    AddListSheetViewActionButtons(
+        isEmpty: false,
+        addList: {},
+        isDialogPresented: .constant(false),
+        listName: .constant("List Name")
+    )
 }

@@ -2,6 +2,8 @@ import SwiftUI
 import SwipeActions
 
 struct HomeView: View {
+    @State private var homeViewModel = HomeViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -15,7 +17,7 @@ struct HomeView: View {
                             } label: {
                                 ReminderContainerView(
                                     imagePath: nil,
-                                    count: 5,
+                                    count: homeViewModel.todaysReminders.count,
                                     title: "Today",
                                     circleFillColor: Color.blue,
                                     isSystemImage: false,
@@ -28,7 +30,7 @@ struct HomeView: View {
                             } label: {
                                 ReminderContainerView(
                                     imagePath: "calendar",
-                                    count: 3,
+                                    count: homeViewModel.scheduledReminders.count,
                                     title: "Scheduled",
                                     circleFillColor: Colors.red,
                                     isSystemImage: true,
@@ -43,7 +45,7 @@ struct HomeView: View {
                             } label: {
                                 ReminderContainerView(
                                     imagePath: "allReminders",
-                                    count: 5,
+                                    count: homeViewModel.reminders.count,
                                     title: "All",
                                     circleFillColor: Color.black,
                                     isSystemImage: false,
@@ -56,7 +58,7 @@ struct HomeView: View {
                             } label: {
                                 ReminderContainerView(
                                     imagePath: "checkmark",
-                                    count: 17,
+                                    count: homeViewModel.completedReminders.count,
                                     title: "Completed",
                                     circleFillColor: Colors.gray90,
                                     isSystemImage: true,
@@ -65,34 +67,41 @@ struct HomeView: View {
                             }
                         }
                         
-                        MyListsTextView()
-                        
-                        LazyVStack(spacing: 0) {
-                            ForEach(0 ..< 25) { _ in
-                                NavigationLink {
-                                    ReminderDetailsView()
-                                        .navigationTitle("Reminder")
-                                        .navigationBarTitleDisplayMode(.large)
-                                } label: {
-                                    ListContainerView(circleColor: .orange, title: "Reminder", imagePath: "list.bullet", count: 3)
-                                        .foregroundStyle(Color.black)
-                                        .addSwipeAction(edge: .trailing) {
-                                            Button {
-                                                
-                                            } label: {
-                                                Image(systemName: "trash")
-                                                    .frame(width: 70, height: 54, alignment: .center)
-                                                    .foregroundColor(.white)
-                                                    .background(Color.red)
+                        if !homeViewModel.lists.isEmpty {
+                            MyListsTextView()
+                            
+                            LazyVStack(spacing: 0) {
+                                ForEach(homeViewModel.lists) { list in
+                                    NavigationLink {
+                                        ReminderDetailsView()
+                                            .navigationTitle(list.reminderTitle ?? "")
+                                            .navigationBarTitleDisplayMode(.large)
+                                    } label: {
+                                        ListContainerView(
+                                            circleColor: Color.from(name: list.reminderColor ?? "orange"),
+                                            title: list.reminderTitle ?? "",
+                                            imagePath: list.reminderIcon ?? "list.bullet",
+                                            count: 3
+                                        )
+                                            .foregroundStyle(Color.black)
+                                            .addSwipeAction(edge: .trailing) {
+                                                Button {
+                                                    
+                                                } label: {
+                                                    Image(systemName: "trash")
+                                                        .frame(width: 70, height: 54, alignment: .center)
+                                                        .foregroundColor(.white)
+                                                        .background(Color.red)
+                                                }
                                             }
-                                        }
+                                    }
+                                    
+                                    Divider()
+                                        .padding(.leading, 60)
                                 }
-                                
-                                Divider()
-                                    .padding(.leading, 60)
                             }
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                     .padding(.horizontal)
                     

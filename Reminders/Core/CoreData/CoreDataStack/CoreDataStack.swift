@@ -41,6 +41,7 @@ class CoreDataStack {
             newReminder.title = item.title
             newReminder.notes = item.notes
             newReminder.createdAt = item.createdAt
+            newReminder.isCompleted = item.isCompleted
         }
         
         reminders = fetchData(entityType: ReminderEntity.self)
