@@ -86,7 +86,7 @@ struct HomeView: View {
                                             .foregroundStyle(Color.black)
                                             .addSwipeAction(edge: .trailing) {
                                                 Button {
-                                                    
+                                                    homeViewModel.deleteList(item: list)
                                                 } label: {
                                                     Image(systemName: "trash")
                                                         .frame(width: 70, height: 54, alignment: .center)
