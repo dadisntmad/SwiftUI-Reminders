@@ -23,15 +23,11 @@ class HomeViewModel {
     }
     
     func addList(color: Color, icon: String, title: String) {
-        let context = CoreDataStack.shared.container.viewContext
-        let entity = ReminderListEntity(context: context)
-        
-        entity.createdAt = Date()
-        entity.reminderColor = color.description
-        entity.reminderIcon = icon
-        entity.reminderTitle = title
-        
-        CoreDataStack.shared.addList(item: entity)
+        CoreDataStack.shared.addList(
+            color: color.description,
+            icon: icon,
+            title: title
+        )
     }
     
     func deleteList(item: ReminderListEntity) {

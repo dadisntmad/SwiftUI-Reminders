@@ -20,12 +20,12 @@ class CoreDataStack {
         getData()
     }
     
-    func addList(item: ReminderListEntity) {
+    func addList(color: String, icon: String, title: String) {
         add(item: ReminderListEntity.self) { newItem in
-            newItem.createdAt = item.createdAt
-            newItem.reminderColor = item.reminderColor
-            newItem.reminderIcon = item.reminderIcon
-            newItem.reminderTitle = item.reminderTitle
+            newItem.createdAt = Date()
+            newItem.reminderColor = color
+            newItem.reminderIcon = icon
+            newItem.reminderTitle = title
         }
         
         reminderLists = fetchData(entityType: ReminderListEntity.self)
