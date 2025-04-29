@@ -4,9 +4,11 @@ struct NewReminderView: View {
     @State private var title = ""
     @State private var notes = ""
     @State private var isDialogPresented = false
-    @State private var selectedList = 0
+    @State private var selectedListIndex = 0
     @State private var selectedDateBox = 0
     @State private var isDateDialogPresented = false
+    
+    @State private var homeViewModel = HomeViewModel()
     
     @Environment(\.dismiss) private var dismiss
     
@@ -19,6 +21,14 @@ struct NewReminderView: View {
         let notesIsNotEmpty = !notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         
         return titleIsNotEmpty || notesIsNotEmpty
+    }
+    
+    private var selectedList: ReminderListEntity? {
+        let lists = homeViewModel.lists
+        
+        guard lists.indices.contains(selectedListIndex) else { return nil }
+    
+        return lists[selectedListIndex]
     }
     
     var body: some View {
@@ -105,7 +115,10 @@ struct NewReminderView: View {
                         
                         // list
                         NavigationLink {
-                            ListsView(selectedList: $selectedList)
+                            ListsView(
+                                title: selectedList?.reminderTitle ?? "Reminder",
+                                selectedListIndex: $selectedListIndex
+                            )
                                 .navigationTitle("List")
                         } label: {
                             HStack(spacing: 6) {
@@ -117,10 +130,10 @@ struct NewReminderView: View {
                                 
                                 HStack {
                                     Circle()
-                                        .fill(.orange)
+                                        .fill(Color.from(name: selectedList?.reminderColor ?? "orange"))
                                         .frame(width: 8, height: 8)
                                     
-                                    Text("Reminder")
+                                    Text(selectedList?.reminderTitle ?? "")
                                         .font(.system(size: 17))
                                         .foregroundStyle(Color.gray70)
                                     

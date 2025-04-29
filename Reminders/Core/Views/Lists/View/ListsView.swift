@@ -2,31 +2,36 @@
 import SwiftUI
 
 struct ListsView: View {
-    @Binding var selectedList: Int
+    let title: String
+    
+    @Binding var selectedListIndex: Int
     
     @Environment(\.dismiss) private var dismiss
     
+    @State private var homeViewModel = HomeViewModel()
+    
     var body: some View {
         VStack {
-            Text("Reminder will be created Reminder")
+            Text("Reminder will be created in \"\(title)\"")
                 .bold()
             
             ScrollView(showsIndicators: false) {
                 LazyVStack {
-                    ForEach(0 ..< 5) { index in
+                    ForEach(Array(homeViewModel.lists.enumerated()), id: \.element.id) { index, list in
                         UserListView(
-                            circleColor: Color.orange,
-                            imagePath: "list.bullet",
-                            listTitle: "Reminder",
-                            isSelected: selectedList == index) {
-                                if selectedList == index {
-                                    dismiss()
-                                    return
-                                }
-                                
-                                selectedList = index
+                            circleColor: Color.from(name: list.reminderColor ?? "orange"),
+                            imagePath: list.reminderIcon ?? "list.bullet",
+                            listTitle: list.reminderTitle ?? "Reminder",
+                            isSelected: selectedListIndex == index
+                        ) {
+                            if selectedListIndex == index {
                                 dismiss()
+                                return
                             }
+                            
+                            selectedListIndex = index
+                            dismiss()
+                        }
                         
                         Divider()
                             .padding(.leading, 46)
@@ -41,5 +46,5 @@ struct ListsView: View {
 }
 
 #Preview {
-    ListsView(selectedList: .constant(1))
+    ListsView(title: "Reminder", selectedListIndex: .constant(1))
 }

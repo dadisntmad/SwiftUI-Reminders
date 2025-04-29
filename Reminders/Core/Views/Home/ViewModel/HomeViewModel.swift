@@ -33,4 +33,16 @@ class HomeViewModel {
     func deleteList(item: ReminderListEntity) {
         CoreDataStack.shared.deleteList(item: item)
     }
+    
+    func addReminder(title: String, notes: String, remindAt: Date) {
+        CoreDataStack.shared.addReminder(
+            title: title,
+            notes: notes,
+            remindAt: remindAt
+        )
+    }
+    
+    func deleteReminder(item: ReminderEntity) {
+        CoreDataStack.shared.deleteReminder(item: item)
+    }
 }
