@@ -81,7 +81,7 @@ struct HomeView: View {
                                             circleColor: Color.from(name: list.reminderColor ?? "orange"),
                                             title: list.reminderTitle ?? "",
                                             imagePath: list.reminderIcon ?? "list.bullet",
-                                            count: 3
+                                            count: (list.reminders as? Set<ReminderEntity>)?.count ?? 0
                                         )
                                             .foregroundStyle(Color.black)
                                             .addSwipeAction(edge: .trailing) {

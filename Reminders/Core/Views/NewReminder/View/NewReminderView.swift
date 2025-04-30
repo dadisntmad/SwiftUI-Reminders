@@ -72,8 +72,11 @@ struct NewReminderView: View {
                             homeViewModel.addReminder(
                                 title: title,
                                 notes: notes,
-                                remindAt: Dates.remindAtDate(date: date, time: time)
+                                remindAt: Dates.remindAtDate(date: date, time: time),
+                                to: selectedList ?? homeViewModel.lists[0]
                             )
+                            
+                            dismiss()
                         } label: {
                             Text("Add")
                         }
@@ -120,7 +123,7 @@ struct NewReminderView: View {
                             date: date,
                             time: time
                         )
-                            .padding(.bottom, 15)
+                        .padding(.bottom, 15)
                         
                         // list
                         NavigationLink {

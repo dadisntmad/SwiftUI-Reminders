@@ -6,11 +6,13 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="remindAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReminderListEntity" inverseName="reminders" inverseEntity="ReminderListEntity"/>
     </entity>
     <entity name="ReminderListEntity" representedClassName="ReminderListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="reminderColor" optional="YES" attributeType="String"/>
         <attribute name="reminderIcon" optional="YES" attributeType="String"/>
         <attribute name="reminderTitle" optional="YES" attributeType="String"/>
+        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReminderEntity" inverseName="list" inverseEntity="ReminderEntity"/>
     </entity>
 </model>

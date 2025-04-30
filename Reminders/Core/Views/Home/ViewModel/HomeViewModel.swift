@@ -34,11 +34,12 @@ class HomeViewModel {
         CoreDataStack.shared.deleteList(item: item)
     }
     
-    func addReminder(title: String, notes: String, remindAt: Date) {
+    func addReminder(title: String, notes: String, remindAt: Date, to list: ReminderListEntity) {
         CoreDataStack.shared.addReminder(
             title: title,
             notes: notes,
-            remindAt: remindAt
+            remindAt: remindAt,
+            to: list
         )
     }
     
