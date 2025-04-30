@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct DateDialogView: View {
+    @Binding var date: Date
+    @Binding var time: Date
+    
     @State private var isDatePickerShown = true
     @State private var isTimePickerShown = false
-    @State private var date = Date()
-    @State private var time = Date()
     
     @Environment(\.dismiss) private var dismiss
     
@@ -26,7 +27,7 @@ struct DateDialogView: View {
                 Spacer()
                 
                 Button {
-                    
+                    dismiss()
                 } label: {
                     Text("Apply")
                         .bold()
@@ -123,5 +124,5 @@ struct DateDialogView: View {
 }
 
 #Preview {
-    DateDialogView()
+    DateDialogView(date: .constant(Date()), time: .constant(Date()))
 }

@@ -7,6 +7,8 @@ struct NewReminderView: View {
     @State private var selectedListIndex = 0
     @State private var selectedDateBox = 0
     @State private var isDateDialogPresented = false
+    @State private var date = Date()
+    @State private var time = Date()
     
     @State private var homeViewModel = HomeViewModel()
     
@@ -27,7 +29,7 @@ struct NewReminderView: View {
         let lists = homeViewModel.lists
         
         guard lists.indices.contains(selectedListIndex) else { return nil }
-    
+        
         return lists[selectedListIndex]
     }
     
@@ -45,7 +47,6 @@ struct NewReminderView: View {
                             } else {
                                 dismiss()
                             }
-                            
                         } label: {
                             Text("Cancel")
                         }
@@ -68,7 +69,11 @@ struct NewReminderView: View {
                         Spacer()
                         
                         Button {
-                            
+                            homeViewModel.addReminder(
+                                title: title,
+                                notes: notes,
+                                remindAt: Dates.remindAtDate(date: date, time: time)
+                            )
                         } label: {
                             Text("Add")
                         }
@@ -84,7 +89,7 @@ struct NewReminderView: View {
                                 .padding(.top)
                                 .frame(minHeight: 44)
                                 .sheet(isPresented: $isDateDialogPresented) {
-                                    DateDialogView()
+                                    DateDialogView(date: $date, time: $time)
                                 }
                             
                             Divider()
@@ -110,7 +115,11 @@ struct NewReminderView: View {
                         .padding(.bottom, 15)
                         
                         // details
-                        DetailsSectionView(index: selectedDateBox)
+                        DetailsSectionView(
+                            index: selectedDateBox,
+                            date: date,
+                            time: time
+                        )
                             .padding(.bottom, 15)
                         
                         // list
@@ -119,7 +128,7 @@ struct NewReminderView: View {
                                 title: selectedList?.reminderTitle ?? "Reminder",
                                 selectedListIndex: $selectedListIndex
                             )
-                                .navigationTitle("List")
+                            .navigationTitle("List")
                         } label: {
                             HStack(spacing: 6) {
                                 Text("List")
