@@ -11,14 +11,25 @@ class HomeViewModel {
     }
     
     var todaysReminders: [ReminderEntity] {
-        reminders
+        let calendar = Calendar.current
+        
+        return reminders.filter {
+            guard let remindAt = $0.remindAt else { return false }
+            
+            return calendar.isDate(remindAt, inSameDayAs: Date())
+        }
     }
     
     var scheduledReminders: [ReminderEntity] {
-        reminders
+        let now = Date()
+        
+        return reminders.filter {
+            guard let scheduledDate = $0.remindAt else { return false }
+            return scheduledDate > now
+        }
     }
     
     var completedReminders: [ReminderEntity] {
-        reminders
+        reminders.filter { $0.isCompleted }
     }
 }
