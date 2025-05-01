@@ -3,6 +3,7 @@ import SwipeActions
 
 struct HomeView: View {
     @State private var homeViewModel = HomeViewModel()
+    @State private var addListSheetViewModel = AddListSheetViewModel()
     
     var body: some View {
         NavigationStack {
@@ -86,7 +87,7 @@ struct HomeView: View {
                                             .foregroundStyle(Color.black)
                                             .addSwipeAction(edge: .trailing) {
                                                 Button {
-                                                    homeViewModel.deleteList(item: list)
+                                                    addListSheetViewModel.deleteList(item: list)
                                                 } label: {
                                                     Image(systemName: "trash")
                                                         .frame(width: 70, height: 54, alignment: .center)

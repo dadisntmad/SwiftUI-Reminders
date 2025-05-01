@@ -6,7 +6,7 @@ struct AddListSheetView: View {
     @State private var selectedColor: Color
     @State private var selectedIcon: String
     
-    @State private var homeViewModel = HomeViewModel()
+    @State private var addListSheetViewModel = AddListSheetViewModel()
     
     private var isEmpty: Bool {
         return listName.trimmingCharacters(in: .whitespaces).isEmpty
@@ -23,7 +23,7 @@ struct AddListSheetView: View {
             AddListSheetViewActionButtons(
                 isEmpty: isEmpty,
                 addList: {
-                    homeViewModel.addList(
+                    addListSheetViewModel.addList(
                         color: selectedColor,
                         icon: selectedIcon,
                         title: listName

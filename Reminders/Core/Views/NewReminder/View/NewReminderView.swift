@@ -11,6 +11,7 @@ struct NewReminderView: View {
     @State private var time = Date()
     
     @State private var homeViewModel = HomeViewModel()
+    @State private var newReminderViewModel = NewReminderViewModel()
     
     @Environment(\.dismiss) private var dismiss
     
@@ -69,7 +70,7 @@ struct NewReminderView: View {
                         Spacer()
                         
                         Button {
-                            homeViewModel.addReminder(
+                            newReminderViewModel.addReminder(
                                 title: title,
                                 notes: notes,
                                 remindAt: Dates.remindAtDate(date: date, time: time),
