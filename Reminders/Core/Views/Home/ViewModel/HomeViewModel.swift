@@ -32,4 +32,8 @@ class HomeViewModel {
     var completedReminders: [ReminderEntity] {
         reminders.filter { $0.isCompleted }
     }
+    
+    func specificListReminders(for list: ReminderListEntity) -> [ReminderEntity] {
+        reminders.filter { $0.list == list }
+    }
 }

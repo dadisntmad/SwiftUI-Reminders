@@ -74,7 +74,7 @@ struct HomeView: View {
                             LazyVStack(spacing: 0) {
                                 ForEach(homeViewModel.lists) { list in
                                     NavigationLink {
-                                        ReminderDetailsView()
+                                        ReminderDetailsView(list: list)
                                             .navigationTitle(list.reminderTitle ?? "")
                                             .navigationBarTitleDisplayMode(.large)
                                     } label: {
@@ -84,17 +84,17 @@ struct HomeView: View {
                                             imagePath: list.reminderIcon ?? "list.bullet",
                                             count: (list.reminders as? Set<ReminderEntity>)?.count ?? 0
                                         )
-                                            .foregroundStyle(Color.black)
-                                            .addSwipeAction(edge: .trailing) {
-                                                Button {
-                                                    addListSheetViewModel.deleteList(item: list)
-                                                } label: {
-                                                    Image(systemName: "trash")
-                                                        .frame(width: 70, height: 54, alignment: .center)
-                                                        .foregroundColor(.white)
-                                                        .background(Color.red)
-                                                }
+                                        .foregroundStyle(Color.black)
+                                        .addSwipeAction(edge: .trailing) {
+                                            Button {
+                                                addListSheetViewModel.deleteList(item: list)
+                                            } label: {
+                                                Image(systemName: "trash")
+                                                    .frame(width: 70, height: 54, alignment: .center)
+                                                    .foregroundColor(.white)
+                                                    .background(Color.red)
                                             }
+                                        }
                                     }
                                     
                                     Divider()
