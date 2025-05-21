@@ -73,6 +73,9 @@ struct HomeView: View {
                             
                             LazyVStack(spacing: 0) {
                                 ForEach(homeViewModel.lists) { list in
+                                    
+                                    let incompleteReminders = (list.reminders as? Set<ReminderEntity>)?.filter { !$0.isCompleted }
+                                    
                                     NavigationLink {
                                         ReminderDetailsView(list: list)
                                             .navigationTitle(list.reminderTitle ?? "")
@@ -82,7 +85,7 @@ struct HomeView: View {
                                             circleColor: Color.from(name: list.reminderColor ?? "orange"),
                                             title: list.reminderTitle ?? "",
                                             imagePath: list.reminderIcon ?? "list.bullet",
-                                            count: (list.reminders as? Set<ReminderEntity>)?.count ?? 0
+                                            count: incompleteReminders?.count ?? 0
                                         )
                                         .foregroundStyle(Color.black)
                                         .addSwipeAction(edge: .trailing) {
