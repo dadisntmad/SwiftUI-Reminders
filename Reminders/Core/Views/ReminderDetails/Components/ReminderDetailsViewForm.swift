@@ -3,15 +3,24 @@ import SwiftUI
 struct ReminderDetailsViewForm: View {
     let reminder: ReminderEntity?
     let isEditing: Bool
+    let isFormPresented: Bool
+    let list: ReminderListEntity?
     
     @State private var isSelected = false
     @State private var title = ""
     @State private var subtitle = ""
     
+    @State private var isDateDialogPresented = false
+    @State private var date = Date()
+    @State private var time = Date()
+    
     
     @State private var workItem: DispatchWorkItem?
     
     @State private var reminderDetailsViewModel = ReminderDetailsViewModel()
+    @State private var newReminderViewModel = NewReminderViewModel()
+    
+    @Binding var isFormPresentedState: Bool
     
     var body: some View {
         VStack {
@@ -36,7 +45,19 @@ struct ReminderDetailsViewForm: View {
                         .onChange(of: title, initial: false) { _, _ in
                             resetTimer()
                         }
-                    
+                } else if isFormPresented {
+                    TextField("New Reminder", text: $title, axis: .vertical)
+                        .onChange(of: title, initial: false) { _, _ in
+                            resetTimer()
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .keyboard) {
+                                Button("Set Date") {
+                                    isDateDialogPresented = true
+                                }
+                            }
+                        }
+                       
                 } else {
                     Text(reminder?.title ?? "")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -53,6 +74,14 @@ struct ReminderDetailsViewForm: View {
                         resetTimer()
                     }
                 
+            } else if isFormPresented {
+                TextField("Add Note", text: $subtitle, axis: .vertical)
+                    .foregroundStyle(Colors.gray70)
+                    .font(.system(size: 15))
+                    .padding(.horizontal, 42)
+                    .onChange(of: subtitle, initial: false) { _, _ in
+                        resetTimer()
+                    }
             } else {
                 Text(reminder?.notes ?? "")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -67,6 +96,9 @@ struct ReminderDetailsViewForm: View {
             if subtitle.isEmpty { subtitle = reminder?.notes ?? "" }
             isSelected = reminder?.isCompleted ?? false
         }
+        .sheet(isPresented: $isDateDialogPresented) {
+            DateDialogView(date: $date, time: $time)
+        }
         
     }
     
@@ -74,13 +106,26 @@ struct ReminderDetailsViewForm: View {
         workItem?.cancel()
         
         let task = DispatchWorkItem {
-            guard let reminder = reminder else { return }
-            reminderDetailsViewModel.editReminder(
-                reminder: reminder,
-                newTitle: title,
-                newNotes: subtitle,
-                newIsCompleted: isSelected
-            )
+            
+            if isEditing {
+                guard let reminder = reminder else { return }
+                reminderDetailsViewModel.editReminder(
+                    reminder: reminder,
+                    newTitle: title,
+                    newNotes: subtitle,
+                    newIsCompleted: isSelected
+                )
+            } else {
+                guard let list = list else { return }
+                isFormPresentedState = false
+                
+                newReminderViewModel.addReminder(
+                    title: title,
+                    notes: subtitle,
+                    remindAt: Dates.remindAtDate(date: date, time: time),
+                    to: list
+                )
+            }
         }
         
         workItem = task
@@ -92,6 +137,9 @@ struct ReminderDetailsViewForm: View {
 #Preview {
     ReminderDetailsViewForm(
         reminder: nil,
-        isEditing: false
+        isEditing: false,
+        isFormPresented: false,
+        list: ReminderListEntity(),
+        isFormPresentedState: .constant(false)
     )
 }

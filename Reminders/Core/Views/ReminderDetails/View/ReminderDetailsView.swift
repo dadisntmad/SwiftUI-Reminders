@@ -19,7 +19,10 @@ struct ReminderDetailsView: View {
                     ForEach(reminders) { reminder in
                         ReminderDetailsViewForm(
                             reminder: reminder,
-                            isEditing: isEditing
+                            isEditing: isEditing,
+                            isFormPresented: false,
+                            list: nil,
+                            isFormPresentedState: $isFormPresented
                         )
                         .onTapGesture {
                             isEditing = true
@@ -30,7 +33,10 @@ struct ReminderDetailsView: View {
                 if isFormPresented {
                     ReminderDetailsViewForm(
                         reminder: nil,
-                        isEditing: false
+                        isEditing: false,
+                        isFormPresented: true,
+                        list: list,
+                        isFormPresentedState: $isFormPresented
                     )
                 }
             }
