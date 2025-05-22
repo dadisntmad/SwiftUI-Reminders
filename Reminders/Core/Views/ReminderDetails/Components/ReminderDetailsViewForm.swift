@@ -57,7 +57,7 @@ struct ReminderDetailsViewForm: View {
                                 }
                             }
                         }
-                       
+                    
                 } else {
                     Text(reminder?.title ?? "")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -119,12 +119,14 @@ struct ReminderDetailsViewForm: View {
                 guard let list = list else { return }
                 isFormPresentedState = false
                 
-                newReminderViewModel.addReminder(
-                    title: title,
-                    notes: subtitle,
-                    remindAt: Dates.remindAtDate(date: date, time: time),
-                    to: list
-                )
+                Task {
+                    await newReminderViewModel.addReminder(
+                        title: title,
+                        notes: subtitle,
+                        remindAt: Dates.remindAtDate(date: date, time: time),
+                        to: list
+                    )
+                }
             }
         }
         

@@ -70,12 +70,14 @@ struct NewReminderView: View {
                         Spacer()
                         
                         Button {
-                            newReminderViewModel.addReminder(
-                                title: title,
-                                notes: notes,
-                                remindAt: Dates.remindAtDate(date: date, time: time),
-                                to: selectedList ?? homeViewModel.lists[0]
-                            )
+                            Task {
+                                await newReminderViewModel.addReminder(
+                                    title: title,
+                                    notes: notes,
+                                    remindAt: Dates.remindAtDate(date: date, time: time),
+                                    to: selectedList ?? homeViewModel.lists[0]
+                                )
+                            }
                             
                             dismiss()
                         } label: {
