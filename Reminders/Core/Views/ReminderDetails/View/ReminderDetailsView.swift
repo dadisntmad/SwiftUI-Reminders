@@ -22,7 +22,8 @@ struct ReminderDetailsView: View {
                             isEditing: isEditing,
                             isFormPresented: false,
                             list: nil,
-                            isFormPresentedState: $isFormPresented
+                            isFormPresentedState: $isFormPresented,
+                            isEditingState: $isEditing
                         )
                         .onTapGesture {
                             isEditing = true
@@ -36,7 +37,8 @@ struct ReminderDetailsView: View {
                         isEditing: false,
                         isFormPresented: true,
                         list: list,
-                        isFormPresentedState: $isFormPresented
+                        isFormPresentedState: $isFormPresented,
+                        isEditingState: $isEditing
                     )
                 }
             }

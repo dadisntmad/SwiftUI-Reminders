@@ -21,6 +21,7 @@ struct ReminderDetailsViewForm: View {
     @State private var newReminderViewModel = NewReminderViewModel()
     
     @Binding var isFormPresentedState: Bool
+    @Binding var isEditingState: Bool
     
     var body: some View {
         VStack {
@@ -52,7 +53,7 @@ struct ReminderDetailsViewForm: View {
                         }
                         .toolbar {
                             ToolbarItem(placement: .keyboard) {
-                                Button("Set Date") {
+                                Button("Choose Date") {
                                     isDateDialogPresented = true
                                 }
                             }
@@ -109,12 +110,17 @@ struct ReminderDetailsViewForm: View {
             
             if isEditing {
                 guard let reminder = reminder else { return }
+                isEditingState = false
                 reminderDetailsViewModel.editReminder(
                     reminder: reminder,
                     newTitle: title,
                     newNotes: subtitle,
                     newIsCompleted: isSelected
                 )
+                
+                if isSelected {
+                    reminderDetailsViewModel.cancelNotification(reminderId: reminder.reminderId ?? "")
+                }
             } else {
                 guard let list = list else { return }
                 isFormPresentedState = false
@@ -142,6 +148,7 @@ struct ReminderDetailsViewForm: View {
         isEditing: false,
         isFormPresented: false,
         list: ReminderListEntity(),
-        isFormPresentedState: .constant(false)
+        isFormPresentedState: .constant(false),
+        isEditingState: .constant(false)
     )
 }

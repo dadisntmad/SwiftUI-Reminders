@@ -1,7 +1,7 @@
 import SwiftUI
 
 class LocalPushNotificationsService {
-    static func scheduleNotification(title: String, date: Date) async {
+    static func scheduleNotification(reminderId: String?, title: String, date: Date) async {
         let content = UNMutableNotificationContent()
         content.title = "Reminders"
         content.body = title
@@ -15,7 +15,7 @@ class LocalPushNotificationsService {
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         
         let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
+            identifier: reminderId ?? UUID().uuidString,
             content: content,
             trigger: trigger
         )
@@ -34,5 +34,12 @@ class LocalPushNotificationsService {
         } catch {
             print("Failed to schedule notification: \(error.localizedDescription)")
         }
+    }
+    
+    static func cancelNotification(reminderId: String) {
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [reminderId])
+        print("Success! Notification with an id \(reminderId) has been cancelled.")
     }
 }

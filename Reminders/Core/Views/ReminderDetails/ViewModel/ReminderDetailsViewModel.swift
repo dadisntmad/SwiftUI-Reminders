@@ -3,7 +3,6 @@ import Observation
 
 @Observable
 class ReminderDetailsViewModel {
-    
     func editReminder(
         reminder: ReminderEntity,
         newTitle: String,
@@ -16,5 +15,9 @@ class ReminderDetailsViewModel {
             newNotes: newNotes,
             newIsCompleted: newIsCompleted
         )
+    }
+    
+    func cancelNotification(reminderId: String) {
+        LocalPushNotificationsService.cancelNotification(reminderId: reminderId)
     }
 }

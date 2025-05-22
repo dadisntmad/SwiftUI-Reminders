@@ -38,6 +38,7 @@ class CoreDataStack {
     
     func addReminder(title: String, notes: String, remindAt: Date, to list: ReminderListEntity) {
         add(item: ReminderEntity.self) { newReminder in
+            newReminder.reminderId = UUID().uuidString
             newReminder.title = title
             newReminder.notes = notes
             newReminder.createdAt = Date()

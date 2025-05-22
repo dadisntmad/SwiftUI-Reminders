@@ -12,6 +12,7 @@ class NewReminderViewModel {
         )
         
         await LocalPushNotificationsService.scheduleNotification(
+            reminderId: nil,
             title: title,
             date: remindAt
         )
